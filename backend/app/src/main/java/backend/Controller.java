@@ -29,8 +29,8 @@ public class Controller {
     }
 
     @PutMapping(value = "/tasks/{id}")
-    public ResponseEntity<String> updateTask(@PathVariable String id) {
-        return service.updateTask(id);
+    public ResponseEntity<String> updateTask(@PathVariable String id, @RequestBody String body) {
+        return service.updateTask(id, body);
     }
 
     @DeleteMapping(value = "/tasks/{id}")
