@@ -30,11 +30,14 @@ public class Service {
 
     public ResponseEntity<String> createTask(Task task) {
         if (task.getTitle() == null || task.getTitle().isEmpty()) {
+            System.err.println("Title is required to create a task!");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title is required!");
         }
 
+        System.out.println("Creating task: " + task);
         tasks.put(task.getId(), task);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Task created!");
+        System.out.println("Remaining tasks: " + tasks.size());
+        return ResponseEntity.status(HttpStatus.CREATED).body("id: " + task.getId());
     }
 
     public ResponseEntity<String> updateTask(String id) {
@@ -42,6 +45,18 @@ public class Service {
     }
 
     public ResponseEntity<String> deleteTask(String id) {
+        if (id.toString() == ":id" || id.isEmpty() || id == null) {  // Really not sure why it is never going in here
+            System.err.println("ID is required to delete a task!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID is required!");
+        }
+        else if (!tasks.containsKey(id)) {
+            System.err.println("Task with id " + id + " not found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found!");
+        }
+
+        System.out.println("Deleting task with id: " + id);
+        tasks.remove(id);
+        System.out.println("Remaining tasks: " + tasks.size());
         return ResponseEntity.status(HttpStatus.OK).body("Task deleted!");
     }
 

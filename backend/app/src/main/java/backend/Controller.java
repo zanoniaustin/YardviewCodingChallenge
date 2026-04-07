@@ -30,12 +30,12 @@ public class Controller {
         return service.createTask(task);
     }
 
-    @PutMapping(value = "/tasks:{id}")
+    @PutMapping(value = "/tasks/{id}")
     public ResponseEntity<String> updateTask(@PathVariable String id) {
         return service.updateTask(id);
     }
 
-    @DeleteMapping(value = "/tasks:{id}")
+    @DeleteMapping(value = "/tasks/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable String id) {
         return service.deleteTask(id);
     }
