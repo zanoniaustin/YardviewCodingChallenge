@@ -4,9 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TaskManager {
+public class App {
 
     public static void main(String[] args) {
-        SpringApplication.run(TaskManager.class, args);
+        SpringApplication.run(App.class, args);
+        System.out.println("Hello World!");
     }
 }
