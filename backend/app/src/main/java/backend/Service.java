@@ -1,33 +1,31 @@
 package backend;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class Service {
 
     private Map<String, Task> tasks = new HashMap<>();
 
-    
-    public ResponseEntity<String> getTasks() {
-        List<Task> tasks = loadTasks();
-        System.out.println(tasks);
+    // DONE
+    public ResponseEntity<List<Task>> getTasks(String status) {
+        List<Task> tasksList;
+        if (status == null || status.isEmpty()) {
+            System.out.println("Returning all tasks: " + tasks.size());
+            tasksList = tasks.values().stream().toList();
+        } else {
+            System.out.println("Returning filtered tasks with status " + status);
+            tasksList = tasks.values().stream().filter(task -> task.getStatus().toString().equals(status)).toList();
+            System.out.println("Filtered tasks count: " + tasksList.size());
+        }
 
-        return ResponseEntity.status(HttpStatus.OK).body("getTasks");
+        return ResponseEntity.status(HttpStatus.OK).body(tasksList);
     }
 
-    public ResponseEntity<String> getFilteredTasks() {
-        return ResponseEntity.status(HttpStatus.OK).body("getFilteredTasks");
-    }
-
+    // DONE
     public ResponseEntity<String> createTask(Task task) {
         if (task.getTitle() == null || task.getTitle().isEmpty()) {
             System.err.println("Title is required to create a task!");
@@ -44,6 +42,7 @@ public class Service {
         return ResponseEntity.status(HttpStatus.OK).body("Task updated!");
     }
 
+    // DONE
     public ResponseEntity<String> deleteTask(String id) {
         if (id.toString() == ":id" || id.isEmpty() || id == null) {  // Really not sure why it is never going in here
             System.err.println("ID is required to delete a task!");
@@ -58,21 +57,5 @@ public class Service {
         tasks.remove(id);
         System.out.println("Remaining tasks: " + tasks.size());
         return ResponseEntity.status(HttpStatus.OK).body("Task deleted!");
-    }
-
-    private List<Task> loadTasks() {
-        List<Task> tasks = new ArrayList<>();
-
-        try(BufferedReader br = new BufferedReader(new FileReader("Tasks.txt"));) {
-            String line = br.readLine();
-            ObjectMapper mapper = new ObjectMapper();
-            Task data = mapper.readValue(line, Task.class);
-            tasks.add(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return List.of();
-        }
-
-        return tasks;
     }
 }
