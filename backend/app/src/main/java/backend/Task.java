@@ -1,18 +1,22 @@
 package backend;
 
 import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
     private String id;
     private String title;
     private String description;
     private Status status;
-    private long createdAt;
+    private String createdAt;
 
     public Task() {
         this.id = UUID.randomUUID().toString();
         this.status = Status.todo;
-        this.createdAt = System.currentTimeMillis();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.createdAt = now.format(formatter);
     }
 
     public String getId() {
@@ -43,11 +47,11 @@ public class Task {
         this.status = status;
     }
 
-    public long getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
