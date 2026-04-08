@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,7 +12,7 @@ public class Service {
 
     private Map<String, Task> tasks = new HashMap<>();
 
-    // DONE
+
     public ResponseEntity<List<Task>> getTasks(String status) {
         List<Task> tasksList;
         if (status == null || status.isEmpty()) {
@@ -28,7 +27,6 @@ public class Service {
         return ResponseEntity.status(HttpStatus.OK).body(tasksList);
     }
 
-    // DONE
     public ResponseEntity<String> createTask(Task task) {
         if (task.getTitle() == null || task.getTitle().isEmpty()) {
             System.err.println("Title is required to create a task!");
@@ -41,7 +39,6 @@ public class Service {
         return ResponseEntity.status(HttpStatus.CREATED).body("id: " + task.getId());
     }
 
-    // DONE
     public ResponseEntity<String> updateTask(String id, String body) {
         if (id.toString() == ":id" || id.isEmpty() || id == null) {  // Really not sure why it is never going in here
             System.err.println("ID is required to update a task!");
@@ -65,7 +62,6 @@ public class Service {
         return ResponseEntity.status(HttpStatus.OK).body("Task updated!");
     }
 
-    // DONE
     public ResponseEntity<String> deleteTask(String id) {
         if (id.toString() == ":id" || id.isEmpty() || id == null) {  // Really not sure why it is never going in here
             System.err.println("ID is required to delete a task!");
@@ -91,7 +87,6 @@ public class Service {
             System.err.println("Error parsing request body: " + e.getMessage());
             return null;
         }
-
         return node.get("status").asText();
     }
 }
