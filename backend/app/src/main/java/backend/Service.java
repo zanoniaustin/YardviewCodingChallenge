@@ -27,16 +27,16 @@ public class Service {
         return ResponseEntity.status(HttpStatus.OK).body(tasksList);
     }
 
-    public ResponseEntity<String> createTask(Task task) {
+    public ResponseEntity<Task> createTask(Task task) {
         if (task.getTitle() == null || task.getTitle().isEmpty()) {
             System.err.println("Title is required to create a task!");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Title is required!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         System.out.println("Creating task: " + task);
         tasks.put(task.getId(), task);
         System.out.println("Remaining tasks: " + tasks.size());
-        return ResponseEntity.status(HttpStatus.CREATED).body("id: " + task.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(task);
     }
 
     public ResponseEntity<String> updateTask(String id, String body) {

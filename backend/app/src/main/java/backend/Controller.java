@@ -24,7 +24,7 @@ public class Controller {
     }
 
     @PostMapping(value = "/tasks")
-    public ResponseEntity<String> createTask(@RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@RequestBody Task task) {
         return service.createTask(task);
     }
 
