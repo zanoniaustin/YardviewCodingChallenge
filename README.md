@@ -9,7 +9,15 @@ back-end: Java 21, gradle 9.2.0
 ## Front-end
 How to run:
 ```
-npm install
+npm build
 ng serve
 ```
+Front end was built on my Windows machine and I was continuing to get this error "CORS error: No 'Access-Control-Allow-Origin'" which I found is quite common on Windows machines when trying to make REST calls from a web page to my machine. So I sadly wasn't able to test the REST calls from front -> back. I have set up the calls so I believe they should be able to get the data back at least.
 
+## Back-end
+```
+./gradlew clean build
+```
+Then I used the VSCode internal Java running functionality.
+
+All REST calls tested with direct calls using a program called Postman, I have added all the test calls I used under 
